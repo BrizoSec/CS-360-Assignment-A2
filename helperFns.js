@@ -64,7 +64,7 @@ function parse(base) {
 function splitDataByMalwareType(inputData) {
 
     return inputData.reduce((rv_buckets, item) => {
-        console.log(item)
+        // console.log(item)
         const _cat = item.Category; // get malware category column (fileInfector, Ransomware)
 
         // initialize category if it doesnt yet xist in return value
