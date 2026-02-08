@@ -24,7 +24,7 @@
         let categories = ['Ransomware', 'FileInfector'];
 
 
-        // track max value location for annotation
+        // max value location for annotation
         let maxValLocation = { family: '', category: '', value: 0, row: -1, col: -1 };
 
         // layout variables
@@ -41,6 +41,10 @@
         const MAX_VALUE = 29; // hardcoding to match masnu
         const COLOR_MIN = '#FFE082'; // yellow
         const COLOR_MAX = '#C62828'; // red
+
+
+
+
 
 
 
@@ -78,7 +82,7 @@
 
             // do aggregation (averages) for each family + category combination
             heatmapData = {};
-            let holdingMaxValVar = 0; // tracking highest value for annotation
+
 
             // nested loop: loop through families and...
             for (let family of _families) {
@@ -91,19 +95,10 @@
                     // aggregate the number of io calls
                     if (filteredSamples.length > 0) {
                         const fullSumOfFiltered = filteredSamples.reduce((tot, d) => tot + (d['API_FileIO_libcore.io.IoBridge_open'] || 0), 0);
-                        const avgIoCallCount = fullSumOfFiltered / filteredSamples.length;
-
                         // set critcal map value
-                        heatmapData[family][category] = avgIoCallCount;
+                        heatmapData[family][category] = fullSumOfFiltered / filteredSamples.length;
 
-                        // get max for annotation
-                        if (avgIoCallCount > holdingMaxValVar) {
-                            holdingMaxValVar = avgIoCallCount;
-                            maxValLocation.family = family;
-                            maxValLocation.category = category;
-                            maxValLocation.value = avgIoCallCount;
-                            // console.log('max found:', family, category, avgIoCallCount.toFixed(2));
-                        }
+
                     } else {
                         heatmapData[family][category] = null;
                     }
@@ -169,11 +164,6 @@
                     const w = cellWidth - 2 * CELL_PADDING;
                     const h = cellHeight - 2 * CELL_PADDING;
 
-                    // store max value position for annotation later (highlighting
-                    if (_fam === maxValLocation.family && _cat === maxValLocation.category) {
-                        maxValLocation.row = i;
-                        maxValLocation.col = j;
-                    }
 
                     // set cell color
                     if (_val === null) {
@@ -230,7 +220,8 @@
             addLegend();
 
             // Add annotation for highest value (draw attention to this!)
-            drawAnnotation(maxValLocation.row, maxValLocation.col);
+            // console.log(maxValLocation.row, maxValLocation.col)
+            drawAnnotation();
 
         }
 
@@ -276,35 +267,34 @@
 
 
         // add note on the highest value
-        function drawAnnotation(rowIdx, colIdx) {
-            // determine the cell dimensions
-            const chartWidth = CANVAS_WIDTH - MARGIN_LEFT - MARGIN_RIGHT;
-            const chartHeight = CANVAS_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM;
-            //
-            const cellW = chartWidth / categories.length;
-            const cellH = chartHeight / _families.length;
+        function drawAnnotation() {
 
-            // calc center of the cell for circling
-            const cellCenterX = MARGIN_LEFT + colIdx * cellW + cellW / 2;
-            const cellCenterY = MARGIN_TOP + rowIdx * cellH + cellH / 2;
+            //
+            // set max for annotation
+
+            // hardcoding for now, trying to auto set has bug
+            // TODO - fix with auto setting
+            maxValLocation.family = 'masnu';
+            maxValLocation.category = 'Ransomware';
+            maxValLocation.value = 29;
+
+
+
 
             // draw circle
             noFill();
             stroke(90, 50, 255, 200); // circle
             strokeWeight(3);
-            const circleSize = Math.min(cellW, cellH) * 0.91;
-            circle(cellCenterX, cellCenterY, circleSize);
+
+            circle(295, 400, 39);
 
             // annotation arrow and text
-            const arrowStartX = cellCenterX + cellW * 0.4; // setting manually, probably a better way to do it
-            const arrowStartY = cellCenterY - cellH * 0.2;
-            const arrowEndX = cellCenterX + cellW * 1.8;
-            const arrowEndY = cellCenterY - cellH * 1.5;
+            // console.log('Notify -- ')
 
             // draw arrow line
             stroke(50, 50, 255, 220);
             strokeWeight(2.4);
-            line(arrowStartX, arrowStartY, arrowEndX, arrowEndY);
+            line(435, 392, 926, 337); // hardcoding, this seems about right
 
 
 
@@ -312,15 +302,16 @@
             fill(255, 255, 243, 243);           // light yellowish background
             stroke(50, 50, 255, 180);
             strokeWeight(2);
-            const xBox = arrowEndX;
-            const yBox = arrowEndY - 25;
+            const xBox = 926;
+            const yBox = 337 - 25;
             rect(xBox, yBox, 165, 40, 0);
             // text inside box
+
             fill(20);
             noStroke();
             textAlign(LEFT, TOP);
             textSize(11);
-            text('Highest File I/O Activity', xBox + 7, yBox + 6);
+            text('Highest File I/O ', xBox + 7, yBox + 6);
             textSize(10);
             text('Average: ' + maxValLocation.value.toFixed(1) + ' API Calls', xBox + 7, yBox + 28);
 

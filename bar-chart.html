@@ -8,6 +8,7 @@
     <!-- moving helper functions to read data and split into malware vs fileInfector buckets -->
     <script src="helperFns.js"></script>
 
+
 </head>
 <body>
 
@@ -37,6 +38,7 @@
 
         async function custom_load_data_in() {
             // load data using js async await
+
             const base = await loadReferenceData();
             console.log('samples:', base.length);
 
@@ -53,7 +55,7 @@
 
                 // use lambda like loop to calculate average (REF: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)
                 const averageNetBytes = categoryDataset.reduce((sum, d) => sum + d.Network_TotalReceivedBytes, 0) / categoryDataset.length;
-                console.log(`Avg Check---   ${category}: ${categoryDataset.length} sample #, avg- ${averageNetBytes.toFixed(0)} `);
+                // console.log(`Avg Check---   ${category}: ${categoryDataset.length} sample #, avg- ${averageNetBytes.toFixed(0)} `);
 
                 return { // return object with label value count and category
                     label: category,
@@ -69,7 +71,7 @@
             createCanvas(920, 410);
             cWidth = width - leftMarg - rightMarg;
             cHeight = height - topMarg - botMarg;
-            console.log('checkpoint1-size:', width, 'x', height);
+            // console.log('checkpoint1-size:', width, 'x', height);
 
             // laod data
             custom_load_data_in();
@@ -95,6 +97,7 @@
             let hoveringStatus = -1; // no bar is under mouse pointer
 
             ////////////
+
             //// used this reference: MDN 2D Collision Detection
             // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 
@@ -108,7 +111,7 @@
                     hoveringStatus = i;
                     // Log hover (throttled to avoid spam)
                     if (frameCount % 60 === 0) {
-                        console.log('Checkpoint2-hovering:', _data[i].label);
+                        // console.log('Checkpoint2-hovering:', _data[i].label);
                     }
                 }
             }
@@ -217,11 +220,24 @@
             textAlign(LEFT, TOP);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
             // add network bytes count to tooltip
             textSize(11);
-            text('Avg Network Bytes:', xAxisTooltip + 12, yAxistooltip + 24);
+            text('Avg Network Bytes: ', xAxisTooltip + 12, yAxistooltip + 24);
             textSize(11);
-            text(_data[categoryIdx].value.toLocaleString() + ' bytes', xAxisTooltip + 12, yAxistooltip + 41);
+            text(_data[categoryIdx].value.toLocaleString() + ' bytes ', xAxisTooltip + 12, yAxistooltip + 41);
         }
 
     </script>

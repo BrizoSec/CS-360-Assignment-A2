@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dot Plot - Assignment 2</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
-    <!-- moving helper functions to read data and split into malware vs fileInfector buckets -->
+    <!-- moving helper function to read data and split into malware vs fileInfector buckets -->
     <script src="helperFns.js"></script>
+
 
 
 
@@ -18,7 +19,7 @@
 </head>
 <body>
     <h1>Instances of Base64 Encoding by Malware Type</h1>
-    <a href="index.html">Return to Home Page</a>
+    <a href="index.html">Return to Home </a>
 
 
 
@@ -32,6 +33,12 @@
         let chartWidth, chartHeight;
         let dotRadius = 5;
 
+
+
+
+
+
+        //
 
         async function loadDataFromCsv() {
             // same as before, load reference data from csv
@@ -183,6 +190,7 @@
                 fill(catColor[0], catColor[1], catColor[2], 140);
                 stroke(catColor[0] - 40, catColor[1] - 40, catColor[2] - 40, 182); // setting opacity to 180 for semi-transparent look
                 strokeWeight(1);
+
                 circle(xPosition, yPosition, dotRadius * 2.5);
 
             }
