@@ -1,4 +1,4 @@
-// used some javascript to pull data out of csv and parse it into headres, actual data
+// built some fns to pull data out of csv and parse it into headres, actual data
 
 async function loadReferenceData() {
     try {
@@ -25,11 +25,12 @@ async function loadReferenceData() {
 
 
 
+
 function parse(base) {
     const lines = base.trim().split('\n'); // split by newline
 
-    // split header and data
-    const hdrs = lines[0].split(','); // assumes line exists
+    // split header and data - trim to remove \r and whitespace
+    const hdrs = lines[0].split(',').map(h => h.trim()); // trim to get rid of \r in files
     const rv = []; // retunr value
 
     // split each line by , as it is csv input
@@ -39,7 +40,7 @@ function parse(base) {
 
         // parse row
         hdrs.forEach((header, idx) => {
-            const rwVal = lineVals[idx];
+            const rwVal = lineVals[idx] ? lineVals[idx].trim() : '';
 
 
             // convert decimals if number
@@ -51,6 +52,7 @@ function parse(base) {
 
     return rv;
 }
+
 
 
 
