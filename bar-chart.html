@@ -15,6 +15,9 @@
     <h1>Bar Chart: Average Total Network Bytes Received per Malware Sample</h1>
     <a href="index.html">Return to Home Page</a>
 
+
+    <div id="canv-holder"></div>
+
     <script>
         // overall steps include loading data asynchronously, aggregating data to show in bar chart and drawing
         // the graph
@@ -68,7 +71,12 @@
 
         // per class, need setup which is auto called by p5js code
         function setup() {
-            createCanvas(920, 410);
+            let canvas = createCanvas(920, 410);
+
+            //
+            canvas.parent('canv-holder');
+
+
             cWidth = width - leftMarg - rightMarg;
             cHeight = height - topMarg - botMarg;
             // console.log('checkpoint1-size:', width, 'x', height);
@@ -241,6 +249,16 @@
         }
 
     </script>
+
+
+
+
+
+    <br><br>
+    <img src="bar-chart-tableau.png">
+
+
+
 </body>
 </html>
 

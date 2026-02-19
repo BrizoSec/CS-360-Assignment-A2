@@ -20,8 +20,7 @@
 <body>
     <h1>Instances of Base64 Encoding by Malware Type</h1>
     <a href="index.html">Return to Home </a>
-
-
+    <div id="canvas-c"></div>
 
     <script>
         // create base variables for positioning and data
@@ -65,7 +64,12 @@
 
         // p5js setup
         function setup() {
-            createCanvas(740, 605);
+            let canvas = createCanvas(740, 605);
+
+
+            canvas.parent('canvas-c');
+
+
             chartWidth = width - 2 * margin;
             chartHeight = height - 2 * margin;
 
@@ -200,6 +204,13 @@
 
 
     </script>
+
+    <br><br>
+
+
+
+
+    <img src="dot-plot-tableau.png">
 </body>
 </html>
 

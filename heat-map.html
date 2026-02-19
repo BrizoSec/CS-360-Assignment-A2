@@ -14,7 +14,13 @@
 
 </head>
 <body>
-    <a href="index.html">Return to Home Page</a>
+    <h1>File I/O Activity of Malware</h1>
+    <a href="index.html">Return to Home </a>
+
+
+
+
+    <div id="can-c"></div>
 
     <script>
         // init variables
@@ -115,7 +121,11 @@
 
         /////////////
         function setup() {
-            createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+            let canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+
+
+            // fixing spacing
+            canvas.parent('can-c');
             textFont('Arial');
             loadSourceData();
 
@@ -319,6 +329,17 @@
         }
 
     </script>
+
+    <br><br>
+
+
+
+
+
+
+    <img src="heatmap-tableau.png">
+
+
 </body>
 </html>
 
